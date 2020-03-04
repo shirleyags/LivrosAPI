@@ -56,24 +56,15 @@ public class LivrosResources {
 	
 	@RequestMapping(value ="/{id}", method = RequestMethod.GET) //Trazer é GET
 		public ResponseEntity<?> buscar(@PathVariable("id")Long id){
-		Livro cadaLivro = null;
-		try {
-			cadaLivro = livrosService.buscar(id);
-		}catch(LivroNaoEncontradoException e){
-			return ResponseEntity.notFound().build();
-		}
+		Optional<Livro> cadaLivro = livrosService.buscar(id);
+	
 			return ResponseEntity.status(HttpStatus.OK).body(cadaLivro);
 		}
 	
 	
 	@RequestMapping(value ="/{id}", method = RequestMethod.DELETE) 
 	public ResponseEntity<Void> deletar(@PathVariable("id")Long id) {
-		try {
 			livrosService.deletar(id);
-		}catch(EmptyResultDataAccessException e){
-			return ResponseEntity.notFound().build();
-			
-		}
 		return ResponseEntity.noContent().build();
 		
 	}
@@ -81,13 +72,7 @@ public class LivrosResources {
 	@RequestMapping(value ="/{id}", method = RequestMethod.PUT) 
 	public  ResponseEntity<Void> atualizar(@RequestBody Livro cadaLivro, @PathVariable("id")Long id) {
 		cadaLivro.setId(id);
-	
-	try {
 		livrosService.atualizar(cadaLivro);
-	}catch(EmptyResultDataAccessException e){
-		return ResponseEntity.notFound().build();
-		
-	}
 	return ResponseEntity.noContent().build();
 	}
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,7 +32,8 @@ public class Livro {
 	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private String resumo;
 	@JsonInclude(JsonInclude.Include.NON_NULL) 
-	@Transient // Evita que seja feita a relação entre livro e comentário.
+	//@Transient // Evita que seja feita a relação entre livro e comentário.
+	@OneToMany(mappedBy = "esseLivro") //Livro tem varios comentários. É para indicar qual é o lado inverso ou não dominante da relação.
 	private List<Comentario> comentarios;
 	
 	

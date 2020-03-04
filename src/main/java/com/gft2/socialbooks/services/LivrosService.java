@@ -52,13 +52,13 @@ public class LivrosService {
 		try {
 			livrosRepository.deleteById(id);
 		}catch(EmptyResultDataAccessException e){
-			throw new LivroNaoEncontradoException("O livro não pôde ser encontrado!");
+			throw new LivroNaoEncontradoException("O livro não pôde ser encontrado!"); //Por que não é ao contrário??
 		}
 		
 	} //Por que não precisa do return???
 	
-	public void atualizar(Livro cadaLivro) { //Por que aqui não rebece o Long Id???
-		verificarExistenciaLivro(cadaLivro);
+	public void atualizar(Livro cadaLivro) { //Por que aqui não recebe o Long Id???
+		verificarExistenciaLivro(cadaLivro); //Verifica a existência do livro
 		livrosRepository.save(cadaLivro);
 		
 	}

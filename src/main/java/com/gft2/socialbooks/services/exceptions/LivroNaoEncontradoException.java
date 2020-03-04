@@ -1,6 +1,8 @@
 package com.gft2.socialbooks.services.exceptions;
 
-public class LivroNaoEncontradoException extends RuntimeException {
+public class LivroNaoEncontradoException extends RuntimeException  {
+	
+	//RuntimeException = Excessão não checada
 
 	/**
 	 * 
@@ -9,7 +11,7 @@ public class LivroNaoEncontradoException extends RuntimeException {
 
 	public LivroNaoEncontradoException(String mensagem) {
 
-		super(mensagem);
+		super(mensagem); //super = Construtor da classe RuntimeException
 	}
 
 	public LivroNaoEncontradoException(String mensagem, Throwable causa) {
