@@ -1,6 +1,7 @@
 package com.gft2.socialbooks.domain;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,6 +38,13 @@ public class Comentario {
 	
 	
 	
+	
+	public Livro getEsseLivro() {
+		return esseLivro;
+	}
+	public void setEsseLivro(Livro esseLivro) {
+		this.esseLivro = esseLivro;
+	}
 	public Long getId() {
 		return id;
 	}

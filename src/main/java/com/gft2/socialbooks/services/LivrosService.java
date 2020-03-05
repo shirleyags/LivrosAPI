@@ -1,6 +1,7 @@
 package com.gft2.socialbooks.services;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.gft2.socialbooks.domain.Comentario;
 import com.gft2.socialbooks.domain.Livro;
+import com.gft2.socialbooks.repository.ComentariosRepository;
 import com.gft2.socialbooks.repository.LivrosRepository;
 import com.gft2.socialbooks.services.exceptions.LivroNaoEncontradoException;
 
@@ -25,6 +28,9 @@ public class LivrosService {
 	
 	@Autowired
 	private LivrosRepository livrosRepository; 
+	
+	@Autowired
+	private ComentariosRepository comentariosRepository; 
 	
 	
 	public List<Livro> listar(){
@@ -65,6 +71,16 @@ public class LivrosService {
 	
 	private void verificarExistenciaLivro(Livro cadaLivro) {
 		buscar(cadaLivro.getId());
+	}
+	
+	
+	public Comentario salvarComentario(Long livroId, Comentario cadaComentario ) {
+		Livro cadaLivro = buscar(livroId).get();
+		cadaComentario.setEsseLivro(cadaLivro);
+		cadaComentario.setData(new Date());
+		
+		return comentariosRepository.save(cadaComentario);
+		
 	}
 	
 

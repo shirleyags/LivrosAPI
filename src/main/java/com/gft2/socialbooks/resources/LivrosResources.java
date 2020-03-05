@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.gft2.socialbooks.domain.Comentario;
 import com.gft2.socialbooks.domain.Livro;
 import com.gft2.socialbooks.repository.LivrosRepository;
 import com.gft2.socialbooks.services.LivrosService;
@@ -75,5 +76,25 @@ public class LivrosResources {
 		livrosService.atualizar(cadaLivro);
 	return ResponseEntity.noContent().build();
 	}
+	
+	
+	@RequestMapping(value="/{id}/comentarios", method = RequestMethod.POST)
+	public ResponseEntity<Void> adicionarComentario(@PathVariable Long livroId, @RequestBody Comentario cadaComentario) {
+		livrosService.salvarComentario(livroId, cadaComentario);
+		
+		//URI umaUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand().toUri();//Estrutura para buscar 
+		//cada comentário
+		
+		URI umaUri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri(); //Para buscar todos os comentários
+		
+		return ResponseEntity.created(umaUri).build();
+		
+		
+		
+		
+	}
 }
+
+
+
 
