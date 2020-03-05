@@ -79,7 +79,7 @@ public class LivrosResources {
 	
 	
 	@RequestMapping(value="/{id}/comentarios", method = RequestMethod.POST)
-	public ResponseEntity<Void> adicionarComentario(@PathVariable Long livroId, @RequestBody Comentario cadaComentario) {
+	public ResponseEntity<Void> adicionarComentario(@PathVariable("id")Long livroId, @RequestBody Comentario cadaComentario) {
 		livrosService.salvarComentario(livroId, cadaComentario);
 		
 		//URI umaUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand().toUri();//Estrutura para buscar 
@@ -88,11 +88,24 @@ public class LivrosResources {
 		URI umaUri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri(); //Para buscar todos os comentários
 		
 		return ResponseEntity.created(umaUri).build();
+				
+	}
+	
+	@RequestMapping(value="/{id}/comentarios", method = RequestMethod.GET)
+	public ResponseEntity<List<Comentario>> listarComentario(@PathVariable("id")Long livroId){
+		List<Comentario> comentarios = livrosService.listarComentario(livroId);
 		
-		
+		return ResponseEntity.status(HttpStatus.OK).body(comentarios);
 		
 		
 	}
+		
+	
+	
+	
+	
+	
+	
 }
 
 
