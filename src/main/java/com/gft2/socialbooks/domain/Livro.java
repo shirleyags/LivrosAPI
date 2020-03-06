@@ -4,12 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 
@@ -21,12 +25,10 @@ public class Livro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	
 	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private String nome;
 	@JsonInclude(JsonInclude.Include.NON_NULL) 
-	private Date prublicacao;
+	private Date publicacao;
 	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private String editora;
 	@JsonInclude(JsonInclude.Include.NON_NULL) 
@@ -35,19 +37,13 @@ public class Livro {
 	//@Transient // Evita que seja feita a relação entre livro e comentário.
 	@OneToMany(mappedBy = "esseLivro") //Livro tem varios comentários. É para indicar qual é o lado inverso ou não dominante da relação.
 	private List<Comentario> comentarios;
+	@ManyToOne
+	@JoinColumn(name="AUTOR_ID")
+	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	
 	
+	private Autor esseAutor;
 	
-	
-	public Livro() {}
-	
-	public Livro(String nome) {
-		this.nome = nome;
-	}
-
-
-
-
 	public Long getId() {
 		return id;
 	}
@@ -60,11 +56,11 @@ public class Livro {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Date getPrublicacao() {
-		return prublicacao;
+	public Date getPublicacao() {
+		return publicacao;
 	}
-	public void setPrublicacao(Date prublicacao) {
-		this.prublicacao = prublicacao;
+	public void setPublicacao(Date publicacao) {
+		this.publicacao = publicacao;
 	}
 	public String getEditora() {
 		return editora;
@@ -84,12 +80,16 @@ public class Livro {
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
-	public String getAutor() {
-		return autor;
+	public Autor getEsseAutor() {
+		return esseAutor;
 	}
-	public void setAutor(String autor) {
-		this.autor = autor;
+	public void setEsseAutor(Autor esseAutor) {
+		this.esseAutor = esseAutor;
 	}
-	private String autor;
+	
+	
+	
+
+	
 
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.gft2.socialbooks.domain.DetalhesErro;
+import com.gft2.socialbooks.services.exceptions.AutorExistenteException;
+import com.gft2.socialbooks.services.exceptions.AutorNaoExistenteException;
 import com.gft2.socialbooks.services.exceptions.LivroNaoEncontradoException;
 
 @ControllerAdvice
@@ -30,6 +32,39 @@ public class ResourceExceptionHandler {
 		erro.setTitulo("O livro não pô ser encontrado!");
 		erro.setTimestamp(System.currentTimeMillis()); //Para trazer a mensagem de erro em milesegundos
 		erro.setMensagemDesenvolvedor("http//:erros.socialbooks.com/404");
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+		
+				}
+	
+	
+	@ExceptionHandler(AutorExistenteException.class) //
+	public ResponseEntity<DetalhesErro> handleAutorExistenteException (AutorExistenteException e, HttpServletRequest request) {
+		
+		
+		DetalhesErro erro= new  DetalhesErro();
+		erro.setStatus(409l);
+		erro.setTitulo("Autor já existente!");
+		erro.setTimestamp(System.currentTimeMillis());
+		erro.setMensagemDesenvolvedor("http//:erros.socialbooks.com/409");
+
+		
+		
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+		
+				}
+	
+	@ExceptionHandler(AutorNaoExistenteException.class) //
+	public ResponseEntity<DetalhesErro> handleAutorNaoExistenteException (AutorNaoExistenteException e, HttpServletRequest request) {
+		
+		
+		DetalhesErro erro= new  DetalhesErro();
+		erro.setStatus(404l);
+		erro.setTitulo("Autor não econtrado!");
+		erro.setTimestamp(System.currentTimeMillis());
+		erro.setMensagemDesenvolvedor("http//:erros.socialbooks.com/404");
+
+		
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 		
