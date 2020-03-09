@@ -20,6 +20,8 @@ public class AutoresService {
 	@Autowired
 	private AutoresRepository autoresRepository;
 	
+	
+	
 	public List<Autor> listar(){
 		return autoresRepository.findAll();
 		
@@ -38,9 +40,9 @@ public class AutoresService {
 		return autoresRepository.save(esseAutor) ;
 	}
 	
-	public Autor buscar(Long id) {
-		Autor autor = autoresRepository.findById(id).get();
-			if(autor==null) {
+	public Optional<Autor> buscar(Long id) {
+		Optional<Autor> autor = autoresRepository.findById(id);
+			if(autor.isEmpty()) {
 				throw new AutorNaoExistenteException("Autor não pôde ser encontrado");
 			}
 			

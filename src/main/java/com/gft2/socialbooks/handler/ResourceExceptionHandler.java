@@ -2,6 +2,7 @@ package com.gft2.socialbooks.handler;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -62,11 +63,28 @@ public class ResourceExceptionHandler {
 		erro.setStatus(404l);
 		erro.setTitulo("Autor não econtrado!");
 		erro.setTimestamp(System.currentTimeMillis());
-		erro.setMensagemDesenvolvedor("http//:erros.socialbooks.com/404");
+		erro.setMensagemDesenvolvedor("http://erros.socialbooks.com/404");
 
 		
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+		
+				}
+	
+	
+	@ExceptionHandler(DataIntegrityViolationException.class) //
+	public ResponseEntity<DetalhesErro> handlesDataIntegrityViolationException (DataIntegrityViolationException e, HttpServletRequest request) {
+		
+		
+		DetalhesErro erro= new  DetalhesErro();
+		erro.setStatus(400l);
+		erro.setTitulo("Requisição inválida!");
+		erro.setTimestamp(System.currentTimeMillis());
+		erro.setMensagemDesenvolvedor("http://erros.socialbooks.com/400");
+
+		
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
 		
 				}
 				

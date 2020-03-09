@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.parsing.EmptyReaderEventListener;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -47,7 +49,7 @@ public class LivrosResources {
 	
 	
 	@RequestMapping(method = RequestMethod.POST) //É POST PORQUE VAI PEGAR DA URL E SALVAR
-	public ResponseEntity<Void> salvar(@RequestBody Livro cadalivro){ 
+	public ResponseEntity<Void> salvar(@Valid @RequestBody Livro cadalivro){ 
 		livrosService.salvar(cadalivro);
 		
 		URI umaUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cadalivro.getId()).toUri();
